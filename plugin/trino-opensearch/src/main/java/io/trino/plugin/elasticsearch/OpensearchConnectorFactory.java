@@ -39,7 +39,7 @@ public class OpensearchConnectorFactory
     @Override
     public String getName()
     {
-        return "elasticsearch";
+        return "opensearch";
     }
 
     @Override
