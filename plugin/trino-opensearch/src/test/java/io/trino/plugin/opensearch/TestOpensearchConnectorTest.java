@@ -11,14 +11,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.trino.plugin.opensearch.decoders;
+package io.trino.plugin.opensearch;
 
-import io.trino.spi.block.BlockBuilder;
-import org.opensearch.search.SearchHit;
+import org.junit.jupiter.api.parallel.Isolated;
 
-import java.util.function.Supplier;
-
-public interface Decoder
+@Isolated
+public class TestOpensearchConnectorTest
+        extends BaseOpensearchConnectorTest
 {
-    void decode(SearchHit hit, Supplier<Object> getter, BlockBuilder output);
+    public TestOpensearchConnectorTest()
+    {
+        // 1.0.0 and 1.0.1 causes NotSslRecordException during the initialization
+        super("opensearchproject/opensearch:1.1.0", "opensearch");
+    }
 }

@@ -13,26 +13,24 @@
  */
 package io.trino.plugin.opensearch;
 
-import static java.lang.String.format;
+import com.google.common.collect.ImmutableList;
+import org.junit.jupiter.api.parallel.Isolated;
 
-public class TestOpenSearchConnectorTest
+import java.util.List;
+
+@Isolated
+public class TestOpensearch2ConnectorTest
         extends BaseOpensearchConnectorTest
 {
-    public TestOpenSearchConnectorTest()
+    public TestOpensearch2ConnectorTest()
     {
-        // 1.0.0 and 1.0.1 causes NotSslRecordException during the initialization
-        super("opensearchproject/opensearch:1.1.0", "opensearch");
+        super("opensearchproject/opensearch:2.2.0", "opensearch");
     }
 
     @Override
-    protected String indexEndpoint(String index, String docId)
+    protected List<Integer> largeInValuesCountData()
     {
-        return format("/%s/_doc/%s", index, docId);
-    }
-
-    @Override
-    protected String indexMapping(String properties)
-    {
-        return "{\"mappings\": " + properties + "}";
+        // 1000 IN fails with "Query contains too many nested clauses; maxClauseCount is set to 1024"
+        return ImmutableList.of(200, 500);
     }
 }

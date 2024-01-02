@@ -26,14 +26,14 @@ import io.trino.testing.QueryRunner;
 import io.trino.testing.TestingTrinoClient;
 import io.trino.tpch.TpchTable;
 import org.apache.http.HttpHost;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
+import org.opensearch.client.RestClient;
+import org.opensearch.client.RestHighLevelClient;
 
 import java.util.Map;
 
 import static io.airlift.testing.Closeables.closeAllSuppress;
 import static io.airlift.units.Duration.nanosSince;
-import static io.trino.plugin.opensearch.OpensearchServer.ELASTICSEARCH_7_IMAGE;
+import static io.trino.plugin.opensearch.OpensearchServer.OPENSEARCH_IMAGE;
 import static io.trino.plugin.tpch.TpchMetadata.TINY_SCHEMA_NAME;
 import static io.trino.testing.TestingSession.testSessionBuilder;
 import static java.lang.String.format;
@@ -44,7 +44,7 @@ public final class OpensearchQueryRunner
 {
     static {
         Logging logging = Logging.initialize();
-        logging.setLevel("org.elasticsearch.client.RestClient", Level.OFF);
+        logging.setLevel("org.opensearch.client.RestClient", Level.OFF);
     }
 
     private OpensearchQueryRunner() {}
@@ -52,7 +52,7 @@ public final class OpensearchQueryRunner
     private static final Logger LOG = Logger.get(OpensearchQueryRunner.class);
     private static final String TPCH_SCHEMA = "tpch";
 
-    public static DistributedQueryRunner createElasticsearchQueryRunner(
+    public static DistributedQueryRunner createOpensearchQueryRunner(
             HostAndPort address,
             Iterable<TpchTable<?>> tables,
             Map<String, String> extraProperties,
@@ -60,10 +60,10 @@ public final class OpensearchQueryRunner
             int nodeCount)
             throws Exception
     {
-        return createElasticsearchQueryRunner(address, tables, extraProperties, extraConnectorProperties, nodeCount, "elasticsearch");
+        return createOpensearchQueryRunner(address, tables, extraProperties, extraConnectorProperties, nodeCount, "elasticsearch");
     }
 
-    public static DistributedQueryRunner createElasticsearchQueryRunner(
+    public static DistributedQueryRunner createOpensearchQueryRunner(
             HostAndPort address,
             Iterable<TpchTable<?>> tables,
             Map<String, String> extraProperties,
@@ -148,8 +148,8 @@ public final class OpensearchQueryRunner
     public static void main(String[] args)
             throws Exception
     {
-        DistributedQueryRunner queryRunner = createElasticsearchQueryRunner(
-                new OpensearchServer(ELASTICSEARCH_7_IMAGE, ImmutableMap.of()).getAddress(),
+        DistributedQueryRunner queryRunner = createOpensearchQueryRunner(
+                new OpensearchServer(OPENSEARCH_IMAGE, false, ImmutableMap.of()).getAddress(),
                 TpchTable.getTables(),
                 ImmutableMap.of("http-server.http.port", "8080"),
                 ImmutableMap.of(),
