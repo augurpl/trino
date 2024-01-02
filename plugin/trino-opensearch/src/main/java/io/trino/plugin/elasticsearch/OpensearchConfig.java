@@ -16,7 +16,6 @@ package io.trino.plugin.elasticsearch;
 import io.airlift.configuration.Config;
 import io.airlift.configuration.ConfigDescription;
 import io.airlift.configuration.ConfigSecuritySensitive;
-import io.airlift.configuration.DefunctConfig;
 import io.airlift.configuration.validation.FileExists;
 import io.airlift.units.Duration;
 import io.airlift.units.MinDuration;
@@ -31,21 +30,6 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-@DefunctConfig({
-        "elasticsearch.max-hits",
-        "elasticsearch.cluster-name",
-        "searchguard.ssl.certificate-format",
-        "searchguard.ssl.pemcert-filepath",
-        "searchguard.ssl.pemkey-filepath",
-        "searchguard.ssl.pemkey-password",
-        "searchguard.ssl.pemtrustedcas-filepath",
-        "searchguard.ssl.keystore-filepath",
-        "searchguard.ssl.keystore-password",
-        "searchguard.ssl.truststore-filepath",
-        "searchguard.ssl.truststore-password",
-        "elasticsearch.table-description-directory",
-        "elasticsearch.max-request-retries",
-        "elasticsearch.max-request-retry-time"})
 public class OpensearchConfig
 {
     public enum Security
@@ -84,7 +68,7 @@ public class OpensearchConfig
         return hosts;
     }
 
-    @Config("elasticsearch.host")
+    @Config("opensearch.host")
     public OpensearchConfig setHosts(List<String> hosts)
     {
         this.hosts = hosts;
@@ -96,7 +80,7 @@ public class OpensearchConfig
         return port;
     }
 
-    @Config("elasticsearch.port")
+    @Config("opensearch.port")
     public OpensearchConfig setPort(int port)
     {
         this.port = port;
@@ -109,7 +93,7 @@ public class OpensearchConfig
         return defaultSchema;
     }
 
-    @Config("elasticsearch.default-schema-name")
+    @Config("opensearch.default-schema-name")
     @ConfigDescription("Default schema name to use")
     public OpensearchConfig setDefaultSchema(String defaultSchema)
     {
@@ -124,7 +108,7 @@ public class OpensearchConfig
         return scrollSize;
     }
 
-    @Config("elasticsearch.scroll-size")
+    @Config("opensearch.scroll-size")
     @ConfigDescription("Scroll batch size")
     public OpensearchConfig setScrollSize(int scrollSize)
     {
@@ -138,7 +122,7 @@ public class OpensearchConfig
         return scrollTimeout;
     }
 
-    @Config("elasticsearch.scroll-timeout")
+    @Config("opensearch.scroll-timeout")
     @ConfigDescription("Scroll timeout")
     public OpensearchConfig setScrollTimeout(Duration scrollTimeout)
     {
@@ -152,7 +136,7 @@ public class OpensearchConfig
         return requestTimeout;
     }
 
-    @Config("elasticsearch.request-timeout")
+    @Config("opensearch.request-timeout")
     @ConfigDescription("Elasticsearch request timeout")
     public OpensearchConfig setRequestTimeout(Duration requestTimeout)
     {
@@ -166,7 +150,7 @@ public class OpensearchConfig
         return connectTimeout;
     }
 
-    @Config("elasticsearch.connect-timeout")
+    @Config("opensearch.connect-timeout")
     @ConfigDescription("Elasticsearch connect timeout")
     public OpensearchConfig setConnectTimeout(Duration timeout)
     {
@@ -180,7 +164,7 @@ public class OpensearchConfig
         return backoffInitDelay;
     }
 
-    @Config("elasticsearch.backoff-init-delay")
+    @Config("opensearch.backoff-init-delay")
     @ConfigDescription("Initial delay to wait between backpressure retries")
     public OpensearchConfig setBackoffInitDelay(Duration backoffInitDelay)
     {
@@ -194,7 +178,7 @@ public class OpensearchConfig
         return backoffMaxDelay;
     }
 
-    @Config("elasticsearch.backoff-max-delay")
+    @Config("opensearch.backoff-max-delay")
     @ConfigDescription("Maximum delay to wait between backpressure retries")
     public OpensearchConfig setBackoffMaxDelay(Duration backoffMaxDelay)
     {
@@ -208,7 +192,7 @@ public class OpensearchConfig
         return maxRetryTime;
     }
 
-    @Config("elasticsearch.max-retry-time")
+    @Config("opensearch.max-retry-time")
     @ConfigDescription("Maximum timeout in case of multiple retries")
     public OpensearchConfig setMaxRetryTime(Duration maxRetryTime)
     {
@@ -223,7 +207,7 @@ public class OpensearchConfig
         return nodeRefreshInterval;
     }
 
-    @Config("elasticsearch.node-refresh-interval")
+    @Config("opensearch.node-refresh-interval")
     @ConfigDescription("How often to refresh the list of available Elasticsearch nodes")
     public OpensearchConfig setNodeRefreshInterval(Duration nodeRefreshInterval)
     {
@@ -231,7 +215,7 @@ public class OpensearchConfig
         return this;
     }
 
-    @Config("elasticsearch.max-http-connections")
+    @Config("opensearch.max-http-connections")
     @ConfigDescription("Maximum number of persistent HTTP connections to Elasticsearch")
     public OpensearchConfig setMaxHttpConnections(int size)
     {
@@ -245,7 +229,7 @@ public class OpensearchConfig
         return maxHttpConnections;
     }
 
-    @Config("elasticsearch.http-thread-count")
+    @Config("opensearch.http-thread-count")
     @ConfigDescription("Number of threads handling HTTP connections to Elasticsearch")
     public OpensearchConfig setHttpThreadCount(int count)
     {
@@ -264,7 +248,7 @@ public class OpensearchConfig
         return tlsEnabled;
     }
 
-    @Config("elasticsearch.tls.enabled")
+    @Config("opensearch.tls.enabled")
     public OpensearchConfig setTlsEnabled(boolean tlsEnabled)
     {
         this.tlsEnabled = tlsEnabled;
@@ -276,7 +260,7 @@ public class OpensearchConfig
         return Optional.ofNullable(keystorePath);
     }
 
-    @Config("elasticsearch.tls.keystore-path")
+    @Config("opensearch.tls.keystore-path")
     public OpensearchConfig setKeystorePath(File path)
     {
         this.keystorePath = path;
@@ -288,7 +272,7 @@ public class OpensearchConfig
         return Optional.ofNullable(keystorePassword);
     }
 
-    @Config("elasticsearch.tls.keystore-password")
+    @Config("opensearch.tls.keystore-password")
     @ConfigSecuritySensitive
     public OpensearchConfig setKeystorePassword(String password)
     {
@@ -301,7 +285,7 @@ public class OpensearchConfig
         return Optional.ofNullable(trustStorePath);
     }
 
-    @Config("elasticsearch.tls.truststore-path")
+    @Config("opensearch.tls.truststore-path")
     public OpensearchConfig setTrustStorePath(File path)
     {
         this.trustStorePath = path;
@@ -313,7 +297,7 @@ public class OpensearchConfig
         return Optional.ofNullable(truststorePassword);
     }
 
-    @Config("elasticsearch.tls.truststore-password")
+    @Config("opensearch.tls.truststore-password")
     @ConfigSecuritySensitive
     public OpensearchConfig setTruststorePassword(String password)
     {
@@ -326,7 +310,7 @@ public class OpensearchConfig
         return verifyHostnames;
     }
 
-    @Config("elasticsearch.tls.verify-hostnames")
+    @Config("opensearch.tls.verify-hostnames")
     public OpensearchConfig setVerifyHostnames(boolean verify)
     {
         this.verifyHostnames = verify;
@@ -338,7 +322,7 @@ public class OpensearchConfig
         return ignorePublishAddress;
     }
 
-    @Config("elasticsearch.ignore-publish-address")
+    @Config("opensearch.ignore-publish-address")
     public OpensearchConfig setIgnorePublishAddress(boolean ignorePublishAddress)
     {
         this.ignorePublishAddress = ignorePublishAddress;
@@ -351,7 +335,7 @@ public class OpensearchConfig
         return Optional.ofNullable(security);
     }
 
-    @Config("elasticsearch.security")
+    @Config("opensearch.security")
     public OpensearchConfig setSecurity(Security security)
     {
         this.security = security;

@@ -121,15 +121,15 @@ public final class OpensearchQueryRunner
     {
         queryRunner.installPlugin(new OpensearchPlugin(factory));
         Map<String, String> config = ImmutableMap.<String, String>builder()
-                .put("elasticsearch.host", address.getHost())
-                .put("elasticsearch.port", Integer.toString(address.getPort()))
+                .put("opensearch.host", address.getHost())
+                .put("opensearch.port", Integer.toString(address.getPort()))
                 // Node discovery relies on the publish_address exposed via the Elasticseach API
                 // This doesn't work well within a docker environment that maps ES's port to a random public port
-                .put("elasticsearch.ignore-publish-address", "true")
-                .put("elasticsearch.default-schema-name", TPCH_SCHEMA)
-                .put("elasticsearch.scroll-size", "1000")
-                .put("elasticsearch.scroll-timeout", "1m")
-                .put("elasticsearch.request-timeout", "2m")
+                .put("opensearch.ignore-publish-address", "true")
+                .put("opensearch.default-schema-name", TPCH_SCHEMA)
+                .put("opensearch.scroll-size", "1000")
+                .put("opensearch.scroll-timeout", "1m")
+                .put("opensearch.request-timeout", "2m")
                 .putAll(extraConnectorProperties)
                 .buildOrThrow();
 
