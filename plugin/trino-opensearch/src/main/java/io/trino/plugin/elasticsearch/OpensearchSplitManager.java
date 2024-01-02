@@ -14,7 +14,7 @@
 package io.trino.plugin.elasticsearch;
 
 import com.google.inject.Inject;
-import io.trino.plugin.elasticsearch.client.ElasticsearchClient;
+import io.trino.plugin.elasticsearch.client.OpensearchClient;
 import io.trino.spi.connector.ConnectorSession;
 import io.trino.spi.connector.ConnectorSplitManager;
 import io.trino.spi.connector.ConnectorSplitSource;
@@ -28,16 +28,16 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static io.trino.plugin.elasticsearch.ElasticsearchTableHandle.Type.QUERY;
+import static io.trino.plugin.elasticsearch.OpensearchTableHandle.Type.QUERY;
 import static java.util.Objects.requireNonNull;
 
-public class ElasticsearchSplitManager
+public class OpensearchSplitManager
         implements ConnectorSplitManager
 {
-    private final ElasticsearchClient client;
+    private final OpensearchClient client;
 
     @Inject
-    public ElasticsearchSplitManager(ElasticsearchClient client)
+    public OpensearchSplitManager(OpensearchClient client)
     {
         this.client = requireNonNull(client, "client is null");
     }
@@ -50,13 +50,13 @@ public class ElasticsearchSplitManager
             DynamicFilter dynamicFilter,
             Constraint constraint)
     {
-        ElasticsearchTableHandle tableHandle = (ElasticsearchTableHandle) table;
+        OpensearchTableHandle tableHandle = (OpensearchTableHandle) table;
 
         if (tableHandle.getType().equals(QUERY)) {
-            return new FixedSplitSource(new ElasticsearchSplit(tableHandle.getIndex(), 0, Optional.empty()));
+            return new FixedSplitSource(new OpensearchSplit(tableHandle.getIndex(), 0, Optional.empty()));
         }
-        List<ElasticsearchSplit> splits = client.getSearchShards(tableHandle.getIndex()).stream()
-                .map(shard -> new ElasticsearchSplit(shard.getIndex(), shard.getId(), shard.getAddress()))
+        List<OpensearchSplit> splits = client.getSearchShards(tableHandle.getIndex()).stream()
+                .map(shard -> new OpensearchSplit(shard.getIndex(), shard.getId(), shard.getAddress()))
                 .collect(toImmutableList());
 
         return new FixedSplitSource(splits);

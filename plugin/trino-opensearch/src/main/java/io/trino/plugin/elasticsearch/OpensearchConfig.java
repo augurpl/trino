@@ -46,7 +46,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
         "elasticsearch.table-description-directory",
         "elasticsearch.max-request-retries",
         "elasticsearch.max-request-retry-time"})
-public class ElasticsearchConfig
+public class OpensearchConfig
 {
     public enum Security
     {
@@ -85,7 +85,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.host")
-    public ElasticsearchConfig setHosts(List<String> hosts)
+    public OpensearchConfig setHosts(List<String> hosts)
     {
         this.hosts = hosts;
         return this;
@@ -97,7 +97,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.port")
-    public ElasticsearchConfig setPort(int port)
+    public OpensearchConfig setPort(int port)
     {
         this.port = port;
         return this;
@@ -111,7 +111,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.default-schema-name")
     @ConfigDescription("Default schema name to use")
-    public ElasticsearchConfig setDefaultSchema(String defaultSchema)
+    public OpensearchConfig setDefaultSchema(String defaultSchema)
     {
         this.defaultSchema = defaultSchema;
         return this;
@@ -126,7 +126,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.scroll-size")
     @ConfigDescription("Scroll batch size")
-    public ElasticsearchConfig setScrollSize(int scrollSize)
+    public OpensearchConfig setScrollSize(int scrollSize)
     {
         this.scrollSize = scrollSize;
         return this;
@@ -140,7 +140,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.scroll-timeout")
     @ConfigDescription("Scroll timeout")
-    public ElasticsearchConfig setScrollTimeout(Duration scrollTimeout)
+    public OpensearchConfig setScrollTimeout(Duration scrollTimeout)
     {
         this.scrollTimeout = scrollTimeout;
         return this;
@@ -154,7 +154,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.request-timeout")
     @ConfigDescription("Elasticsearch request timeout")
-    public ElasticsearchConfig setRequestTimeout(Duration requestTimeout)
+    public OpensearchConfig setRequestTimeout(Duration requestTimeout)
     {
         this.requestTimeout = requestTimeout;
         return this;
@@ -168,7 +168,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.connect-timeout")
     @ConfigDescription("Elasticsearch connect timeout")
-    public ElasticsearchConfig setConnectTimeout(Duration timeout)
+    public OpensearchConfig setConnectTimeout(Duration timeout)
     {
         this.connectTimeout = timeout;
         return this;
@@ -182,7 +182,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.backoff-init-delay")
     @ConfigDescription("Initial delay to wait between backpressure retries")
-    public ElasticsearchConfig setBackoffInitDelay(Duration backoffInitDelay)
+    public OpensearchConfig setBackoffInitDelay(Duration backoffInitDelay)
     {
         this.backoffInitDelay = backoffInitDelay;
         return this;
@@ -196,7 +196,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.backoff-max-delay")
     @ConfigDescription("Maximum delay to wait between backpressure retries")
-    public ElasticsearchConfig setBackoffMaxDelay(Duration backoffMaxDelay)
+    public OpensearchConfig setBackoffMaxDelay(Duration backoffMaxDelay)
     {
         this.backoffMaxDelay = backoffMaxDelay;
         return this;
@@ -210,7 +210,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.max-retry-time")
     @ConfigDescription("Maximum timeout in case of multiple retries")
-    public ElasticsearchConfig setMaxRetryTime(Duration maxRetryTime)
+    public OpensearchConfig setMaxRetryTime(Duration maxRetryTime)
     {
         this.maxRetryTime = maxRetryTime;
         return this;
@@ -225,7 +225,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.node-refresh-interval")
     @ConfigDescription("How often to refresh the list of available Elasticsearch nodes")
-    public ElasticsearchConfig setNodeRefreshInterval(Duration nodeRefreshInterval)
+    public OpensearchConfig setNodeRefreshInterval(Duration nodeRefreshInterval)
     {
         this.nodeRefreshInterval = nodeRefreshInterval;
         return this;
@@ -233,7 +233,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.max-http-connections")
     @ConfigDescription("Maximum number of persistent HTTP connections to Elasticsearch")
-    public ElasticsearchConfig setMaxHttpConnections(int size)
+    public OpensearchConfig setMaxHttpConnections(int size)
     {
         this.maxHttpConnections = size;
         return this;
@@ -247,7 +247,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.http-thread-count")
     @ConfigDescription("Number of threads handling HTTP connections to Elasticsearch")
-    public ElasticsearchConfig setHttpThreadCount(int count)
+    public OpensearchConfig setHttpThreadCount(int count)
     {
         this.httpThreadCount = count;
         return this;
@@ -265,7 +265,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.tls.enabled")
-    public ElasticsearchConfig setTlsEnabled(boolean tlsEnabled)
+    public OpensearchConfig setTlsEnabled(boolean tlsEnabled)
     {
         this.tlsEnabled = tlsEnabled;
         return this;
@@ -277,7 +277,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.tls.keystore-path")
-    public ElasticsearchConfig setKeystorePath(File path)
+    public OpensearchConfig setKeystorePath(File path)
     {
         this.keystorePath = path;
         return this;
@@ -290,7 +290,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.tls.keystore-password")
     @ConfigSecuritySensitive
-    public ElasticsearchConfig setKeystorePassword(String password)
+    public OpensearchConfig setKeystorePassword(String password)
     {
         this.keystorePassword = password;
         return this;
@@ -302,7 +302,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.tls.truststore-path")
-    public ElasticsearchConfig setTrustStorePath(File path)
+    public OpensearchConfig setTrustStorePath(File path)
     {
         this.trustStorePath = path;
         return this;
@@ -315,7 +315,7 @@ public class ElasticsearchConfig
 
     @Config("elasticsearch.tls.truststore-password")
     @ConfigSecuritySensitive
-    public ElasticsearchConfig setTruststorePassword(String password)
+    public OpensearchConfig setTruststorePassword(String password)
     {
         this.truststorePassword = password;
         return this;
@@ -327,7 +327,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.tls.verify-hostnames")
-    public ElasticsearchConfig setVerifyHostnames(boolean verify)
+    public OpensearchConfig setVerifyHostnames(boolean verify)
     {
         this.verifyHostnames = verify;
         return this;
@@ -339,7 +339,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.ignore-publish-address")
-    public ElasticsearchConfig setIgnorePublishAddress(boolean ignorePublishAddress)
+    public OpensearchConfig setIgnorePublishAddress(boolean ignorePublishAddress)
     {
         this.ignorePublishAddress = ignorePublishAddress;
         return this;
@@ -352,7 +352,7 @@ public class ElasticsearchConfig
     }
 
     @Config("elasticsearch.security")
-    public ElasticsearchConfig setSecurity(Security security)
+    public OpensearchConfig setSecurity(Security security)
     {
         this.security = security;
         return this;

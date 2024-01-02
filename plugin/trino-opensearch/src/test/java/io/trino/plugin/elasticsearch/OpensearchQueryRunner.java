@@ -33,23 +33,23 @@ import java.util.Map;
 
 import static io.airlift.testing.Closeables.closeAllSuppress;
 import static io.airlift.units.Duration.nanosSince;
-import static io.trino.plugin.elasticsearch.ElasticsearchServer.ELASTICSEARCH_7_IMAGE;
+import static io.trino.plugin.elasticsearch.OpensearchServer.ELASTICSEARCH_7_IMAGE;
 import static io.trino.plugin.tpch.TpchMetadata.TINY_SCHEMA_NAME;
 import static io.trino.testing.TestingSession.testSessionBuilder;
 import static java.lang.String.format;
 import static java.util.Locale.ENGLISH;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public final class ElasticsearchQueryRunner
+public final class OpensearchQueryRunner
 {
     static {
         Logging logging = Logging.initialize();
         logging.setLevel("org.elasticsearch.client.RestClient", Level.OFF);
     }
 
-    private ElasticsearchQueryRunner() {}
+    private OpensearchQueryRunner() {}
 
-    private static final Logger LOG = Logger.get(ElasticsearchQueryRunner.class);
+    private static final Logger LOG = Logger.get(OpensearchQueryRunner.class);
     private static final String TPCH_SCHEMA = "tpch";
 
     public static DistributedQueryRunner createElasticsearchQueryRunner(
@@ -89,7 +89,7 @@ public final class ElasticsearchQueryRunner
             queryRunner.installPlugin(new TpchPlugin());
             queryRunner.createCatalog("tpch", "tpch");
 
-            ElasticsearchConnectorFactory testFactory = new ElasticsearchConnectorFactory();
+            OpensearchConnectorFactory testFactory = new OpensearchConnectorFactory();
 
             installElasticsearchPlugin(address, queryRunner, catalogName, testFactory, extraConnectorProperties);
 
@@ -116,10 +116,10 @@ public final class ElasticsearchQueryRunner
             HostAndPort address,
             QueryRunner queryRunner,
             String catalogName,
-            ElasticsearchConnectorFactory factory,
+            OpensearchConnectorFactory factory,
             Map<String, String> extraConnectorProperties)
     {
-        queryRunner.installPlugin(new ElasticsearchPlugin(factory));
+        queryRunner.installPlugin(new OpensearchPlugin(factory));
         Map<String, String> config = ImmutableMap.<String, String>builder()
                 .put("elasticsearch.host", address.getHost())
                 .put("elasticsearch.port", Integer.toString(address.getPort()))
@@ -140,7 +140,7 @@ public final class ElasticsearchQueryRunner
     {
         long start = System.nanoTime();
         LOG.info("Running import for %s", table.getTableName());
-        ElasticsearchLoader loader = new ElasticsearchLoader(client, table.getTableName().toLowerCase(ENGLISH), trinoClient.getServer(), trinoClient.getDefaultSession());
+        OpensearchLoader loader = new OpensearchLoader(client, table.getTableName().toLowerCase(ENGLISH), trinoClient.getServer(), trinoClient.getDefaultSession());
         loader.execute(format("SELECT * from %s", new QualifiedObjectName(TPCH_SCHEMA, TINY_SCHEMA_NAME, table.getTableName().toLowerCase(ENGLISH))));
         LOG.info("Imported %s in %s", table.getTableName(), nanosSince(start).convertToMostSuccinctTimeUnit());
     }
@@ -149,13 +149,13 @@ public final class ElasticsearchQueryRunner
             throws Exception
     {
         DistributedQueryRunner queryRunner = createElasticsearchQueryRunner(
-                new ElasticsearchServer(ELASTICSEARCH_7_IMAGE, ImmutableMap.of()).getAddress(),
+                new OpensearchServer(ELASTICSEARCH_7_IMAGE, ImmutableMap.of()).getAddress(),
                 TpchTable.getTables(),
                 ImmutableMap.of("http-server.http.port", "8080"),
                 ImmutableMap.of(),
                 3);
 
-        Logger log = Logger.get(ElasticsearchQueryRunner.class);
+        Logger log = Logger.get(OpensearchQueryRunner.class);
         log.info("======== SERVER STARTED ========");
         log.info("\n====\n%s\n====", queryRunner.getCoordinator().getBaseUrl());
     }

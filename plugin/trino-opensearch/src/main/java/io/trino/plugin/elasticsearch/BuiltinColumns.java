@@ -82,7 +82,7 @@ enum BuiltinColumns
 
     public ColumnHandle getColumnHandle()
     {
-        return new ElasticsearchColumnHandle(
+        return new OpensearchColumnHandle(
                 name,
                 type,
                 decoderDescriptor,

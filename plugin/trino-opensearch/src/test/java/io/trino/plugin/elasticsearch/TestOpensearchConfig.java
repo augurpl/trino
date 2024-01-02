@@ -26,17 +26,17 @@ import java.util.Map;
 import static io.airlift.configuration.testing.ConfigAssertions.assertFullMapping;
 import static io.airlift.configuration.testing.ConfigAssertions.assertRecordedDefaults;
 import static io.airlift.configuration.testing.ConfigAssertions.recordDefaults;
-import static io.trino.plugin.elasticsearch.ElasticsearchConfig.Security.AWS;
+import static io.trino.plugin.elasticsearch.OpensearchConfig.Security.AWS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class TestElasticsearchConfig
+public class TestOpensearchConfig
 {
     @Test
     public void testDefaults()
     {
-        assertRecordedDefaults(recordDefaults(ElasticsearchConfig.class)
+        assertRecordedDefaults(recordDefaults(OpensearchConfig.class)
                 .setHosts(null)
                 .setPort(9200)
                 .setDefaultSchema("default")
@@ -91,7 +91,7 @@ public class TestElasticsearchConfig
                 .put("elasticsearch.security", "AWS")
                 .buildOrThrow();
 
-        ElasticsearchConfig expected = new ElasticsearchConfig()
+        OpensearchConfig expected = new OpensearchConfig()
                 .setHosts(Arrays.asList("example.com"))
                 .setPort(9999)
                 .setDefaultSchema("test")

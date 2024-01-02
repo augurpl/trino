@@ -42,7 +42,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import static io.trino.plugin.elasticsearch.ElasticsearchQueryRunner.createElasticsearchQueryRunner;
+import static io.trino.plugin.elasticsearch.OpensearchQueryRunner.createElasticsearchQueryRunner;
 import static io.trino.spi.type.DoubleType.DOUBLE;
 import static io.trino.spi.type.VarcharType.VARCHAR;
 import static io.trino.testing.MaterializedResult.resultBuilder;
@@ -54,15 +54,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @TestInstance(PER_CLASS)
-public abstract class BaseElasticsearchConnectorTest
+public abstract class BaseOpensearchConnectorTest
         extends BaseConnectorTest
 {
     private final String image;
     private final String catalogName;
-    private ElasticsearchServer elasticsearch;
+    private OpensearchServer elasticsearch;
     protected RestHighLevelClient client;
 
-    BaseElasticsearchConnectorTest(String image, String catalogName)
+    BaseOpensearchConnectorTest(String image, String catalogName)
     {
         this.image = image;
         this.catalogName = catalogName;
@@ -72,7 +72,7 @@ public abstract class BaseElasticsearchConnectorTest
     protected QueryRunner createQueryRunner()
             throws Exception
     {
-        elasticsearch = new ElasticsearchServer(image, ImmutableMap.of());
+        elasticsearch = new OpensearchServer(image, ImmutableMap.of());
 
         HostAndPort address = elasticsearch.getAddress();
         client = new RestHighLevelClient(RestClient.builder(new HttpHost(address.getHost(), address.getPort())));

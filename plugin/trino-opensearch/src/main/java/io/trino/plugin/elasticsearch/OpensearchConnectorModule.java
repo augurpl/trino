@@ -16,7 +16,7 @@ package io.trino.plugin.elasticsearch;
 import com.google.inject.Binder;
 import com.google.inject.Scopes;
 import io.airlift.configuration.AbstractConfigurationAwareModule;
-import io.trino.plugin.elasticsearch.client.ElasticsearchClient;
+import io.trino.plugin.elasticsearch.client.OpensearchClient;
 import io.trino.plugin.elasticsearch.ptf.RawQuery;
 import io.trino.spi.function.table.ConnectorTableFunction;
 
@@ -24,27 +24,27 @@ import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static com.google.inject.multibindings.OptionalBinder.newOptionalBinder;
 import static io.airlift.configuration.ConditionalModule.conditionalModule;
 import static io.airlift.configuration.ConfigBinder.configBinder;
-import static io.trino.plugin.elasticsearch.ElasticsearchConfig.Security.AWS;
-import static io.trino.plugin.elasticsearch.ElasticsearchConfig.Security.PASSWORD;
+import static io.trino.plugin.elasticsearch.OpensearchConfig.Security.AWS;
+import static io.trino.plugin.elasticsearch.OpensearchConfig.Security.PASSWORD;
 import static java.util.function.Predicate.isEqual;
 import static org.weakref.jmx.guice.ExportBinder.newExporter;
 
-public class ElasticsearchConnectorModule
+public class OpensearchConnectorModule
         extends AbstractConfigurationAwareModule
 {
     @Override
     protected void setup(Binder binder)
     {
-        binder.bind(ElasticsearchConnector.class).in(Scopes.SINGLETON);
-        binder.bind(ElasticsearchMetadata.class).in(Scopes.SINGLETON);
-        binder.bind(ElasticsearchSplitManager.class).in(Scopes.SINGLETON);
-        binder.bind(ElasticsearchPageSourceProvider.class).in(Scopes.SINGLETON);
-        binder.bind(ElasticsearchClient.class).in(Scopes.SINGLETON);
+        binder.bind(OpensearchConnector.class).in(Scopes.SINGLETON);
+        binder.bind(OpensearchMetadata.class).in(Scopes.SINGLETON);
+        binder.bind(OpensearchSplitManager.class).in(Scopes.SINGLETON);
+        binder.bind(OpensearchPageSourceProvider.class).in(Scopes.SINGLETON);
+        binder.bind(OpensearchClient.class).in(Scopes.SINGLETON);
         binder.bind(NodesSystemTable.class).in(Scopes.SINGLETON);
 
-        newExporter(binder).export(ElasticsearchClient.class).withGeneratedName();
+        newExporter(binder).export(OpensearchClient.class).withGeneratedName();
 
-        configBinder(binder).bindConfig(ElasticsearchConfig.class);
+        configBinder(binder).bindConfig(OpensearchConfig.class);
 
         newOptionalBinder(binder, AwsSecurityConfig.class);
         newOptionalBinder(binder, PasswordConfig.class);
@@ -52,14 +52,14 @@ public class ElasticsearchConnectorModule
         newSetBinder(binder, ConnectorTableFunction.class).addBinding().toProvider(RawQuery.class).in(Scopes.SINGLETON);
 
         install(conditionalModule(
-                ElasticsearchConfig.class,
+                OpensearchConfig.class,
                 config -> config.getSecurity()
                         .filter(isEqual(AWS))
                         .isPresent(),
                 conditionalBinder -> configBinder(conditionalBinder).bindConfig(AwsSecurityConfig.class)));
 
         install(conditionalModule(
-                ElasticsearchConfig.class,
+                OpensearchConfig.class,
                 config -> config.getSecurity()
                         .filter(isEqual(PASSWORD))
                         .isPresent(),

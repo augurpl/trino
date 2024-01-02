@@ -13,10 +13,26 @@
  */
 package io.trino.plugin.elasticsearch;
 
-import io.trino.spi.connector.ConnectorTransactionHandle;
+import static java.lang.String.format;
 
-public enum ElasticsearchTransactionHandle
-        implements ConnectorTransactionHandle
+public class TestOpenSearchConnectorTest
+        extends BaseOpensearchConnectorTest
 {
-    INSTANCE
+    public TestOpenSearchConnectorTest()
+    {
+        // 1.0.0 and 1.0.1 causes NotSslRecordException during the initialization
+        super("opensearchproject/opensearch:1.1.0", "opensearch");
+    }
+
+    @Override
+    protected String indexEndpoint(String index, String docId)
+    {
+        return format("/%s/_doc/%s", index, docId);
+    }
+
+    @Override
+    protected String indexMapping(String properties)
+    {
+        return "{\"mappings\": " + properties + "}";
+    }
 }

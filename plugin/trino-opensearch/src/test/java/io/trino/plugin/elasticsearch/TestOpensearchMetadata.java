@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestElasticsearchMetadata
+public class TestOpensearchMetadata
 {
     @Test
     public void testLikeToRegexp()
@@ -42,6 +42,6 @@ public class TestElasticsearchMetadata
 
     private static String likeToRegexp(String pattern, Optional<String> escapeChar)
     {
-        return ElasticsearchMetadata.likeToRegexp(Slices.utf8Slice(pattern), escapeChar.map(Slices::utf8Slice));
+        return OpensearchMetadata.likeToRegexp(Slices.utf8Slice(pattern), escapeChar.map(Slices::utf8Slice));
     }
 }

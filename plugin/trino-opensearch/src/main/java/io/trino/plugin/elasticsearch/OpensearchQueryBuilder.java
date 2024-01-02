@@ -51,16 +51,16 @@ import static java.lang.Math.floorDiv;
 import static java.lang.Math.toIntExact;
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 
-public final class ElasticsearchQueryBuilder
+public final class OpensearchQueryBuilder
 {
-    private ElasticsearchQueryBuilder() {}
+    private OpensearchQueryBuilder() {}
 
-    public static QueryBuilder buildSearchQuery(TupleDomain<ElasticsearchColumnHandle> constraint, Optional<String> query, Map<String, String> regexes)
+    public static QueryBuilder buildSearchQuery(TupleDomain<OpensearchColumnHandle> constraint, Optional<String> query, Map<String, String> regexes)
     {
         BoolQueryBuilder queryBuilder = new BoolQueryBuilder();
         if (constraint.getDomains().isPresent()) {
-            for (Map.Entry<ElasticsearchColumnHandle, Domain> entry : constraint.getDomains().get().entrySet()) {
-                ElasticsearchColumnHandle column = entry.getKey();
+            for (Map.Entry<OpensearchColumnHandle, Domain> entry : constraint.getDomains().get().entrySet()) {
+                OpensearchColumnHandle column = entry.getKey();
                 Domain domain = entry.getValue();
 
                 checkArgument(!domain.isNone(), "Unexpected NONE domain for %s", column.getName());

@@ -17,12 +17,12 @@ import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
 
-public class ElasticsearchNode
+public class OpensearchNode
 {
     private final String id;
     private final Optional<String> address;
 
-    public ElasticsearchNode(String id, Optional<String> address)
+    public OpensearchNode(String id, Optional<String> address)
     {
         this.id = requireNonNull(id, "id is null");
         this.address = requireNonNull(address, "address is null");

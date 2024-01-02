@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
-public final class ElasticsearchColumnHandle
+public final class OpensearchColumnHandle
         implements ColumnHandle
 {
     private final String name;
@@ -31,7 +31,7 @@ public final class ElasticsearchColumnHandle
     private final boolean supportsPredicates;
 
     @JsonCreator
-    public ElasticsearchColumnHandle(
+    public OpensearchColumnHandle(
             @JsonProperty("name") String name,
             @JsonProperty("type") Type type,
             @JsonProperty("decoderDescriptor") DecoderDescriptor decoderDescriptor,
@@ -83,7 +83,7 @@ public final class ElasticsearchColumnHandle
             return false;
         }
 
-        ElasticsearchColumnHandle other = (ElasticsearchColumnHandle) obj;
+        OpensearchColumnHandle other = (OpensearchColumnHandle) obj;
         return this.supportsPredicates == other.supportsPredicates &&
                 Objects.equals(this.getName(), other.getName()) &&
                 Objects.equals(this.getType(), other.getType()) &&

@@ -20,18 +20,18 @@ import io.trino.spi.connector.ConnectorFactory;
 
 import static java.util.Objects.requireNonNull;
 
-public class ElasticsearchPlugin
+public class OpensearchPlugin
         implements Plugin
 {
     private final ConnectorFactory connectorFactory;
 
-    public ElasticsearchPlugin()
+    public OpensearchPlugin()
     {
-        connectorFactory = new ElasticsearchConnectorFactory();
+        connectorFactory = new OpensearchConnectorFactory();
     }
 
     @VisibleForTesting
-    ElasticsearchPlugin(ElasticsearchConnectorFactory factory)
+    OpensearchPlugin(OpensearchConnectorFactory factory)
     {
         connectorFactory = requireNonNull(factory, "factory is null");
     }

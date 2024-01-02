@@ -44,13 +44,13 @@ import static io.trino.spi.type.IntegerType.INTEGER;
 import static java.util.Objects.requireNonNull;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
-public class ElasticsearchLoader
+public class OpensearchLoader
         extends AbstractTestingTrinoClient<Void>
 {
     private final String tableName;
     private final RestHighLevelClient client;
 
-    public ElasticsearchLoader(
+    public OpensearchLoader(
             RestHighLevelClient client,
             String tableName,
             TestingTrinoServer trinoServer,
